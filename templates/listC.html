@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+
+
+{% block body %}
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Fecha de Nacimiento</th>
+                    <th scope="col">Tipo de Sangre</th>
+                    <th scope="col">Operaciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in datas %}
+                <tr>
+                    <th scope="row">{{ data.1 }}</th>
+                    <td scope="row">{{ data.2 }}</td>
+                    <td scope="row">{{ data.3 }}</td>
+                    <td>
+                        <a href="/deleteC/{{ data.0 }}" class="btn btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock body %}

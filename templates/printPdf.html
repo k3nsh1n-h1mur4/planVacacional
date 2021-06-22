@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imprimir PDF</title>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="row">
+                <div class="col-3">
+                    <img src="" alt="sntss-logo">
+                </div>
+                <div class="col-9">
+                    <h1 style="text-align: center;">S.N.T.S.S. SECC III JALISCO</h1>
+                    <h2 style="text-align: center;">PLAN VACACIONAL</h2>
+                    <h3 style="text-align: center;">Comprobante Registro y Verificación    <strong>2021</strong> </h3>
+                </div>
+            </div>
+        </div>
+        <div class="card-title">
+
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <div class="card-body">
+                        <span>Nombre: {{ rows[0].1 }}</span><br>
+                        <span>Adscripción: {{ rows[0].2 }}</span><br>
+                        <span>Categoría: {{ rows[0].3 }}</span><br>
+                        <span>Matrícula: {{ rows[0].4 }}</span><br>
+                        <br>
+                        <span>Nombre: {{ rows[0].10 }}</span><br>
+                        <span>Fecha de Nacimiento: {{ rows[0].11 }}</span><br>
+                        <span>Tipo de Sangre: {{ rows[0].12 }}</span>
+                    </div>
+                </div>
+                <div class="container mt-5">
+                    <div class="row">
+                        <div class="col-6">
+                            <img src="{{ qrcode(rows[0], box_size=3) }}" alt="img_qrcode">
+                        </div>
+                    </div>
+                    
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container mt-3" style="text-align: center;">
+        <div class="row">
+            <span>Firma de Recibido:_______________________________________</span>
+        </div>
+    </div>
+<span><strong>--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</strong></span>
+    <div class="container">
+        <div class="card">
+            <div class="row">
+                <div class="col-3">
+                    <img src="" alt="">
+                </div>
+                <div class="col-9">
+                    <h1 style="text-align: center;">S.N.T.S.S. SECC III JALISCO</h1>
+                    <h2 style="text-align: center;">PLAN VACACIONAL</h2>
+                    <h3 style="text-align: center;">Comprobante Registro y Verificación    <strong>2021</strong> </h3>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="container mt-5">
+            <div class="row ">
+                <div class="col-6">
+                    <div class="card-body">
+                        <span>Nombre: {{ rows[0].1 }}</span><br>
+                        <span>Adscripción: {{ rows[0].2 }}</span><br>
+                        <span>Categoría: {{ rows[0].3 }}</span><br>
+                        <span>Matrícula: {{ rows[0].4 }}</span><br>
+                        <br>
+                        <span>Nombre: {{ rows[0].10 }}</span><br>
+                        <span>Fecha de Nacimiento: {{ rows[0].11 }}</span><br>
+                        <span>Tipo de Sangre: {{ rows[0].12 }}</span>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <img src="{{ qrcode(rows[0], box_size=3) }}" alt="img_qrcode">
+                </div>
+            </div>
+        </div> 
+    </div>
+    <div class="container mt-5" style="text-align: center;">
+        <div class="row">
+            <span>Firma de Recibido:________________________________________________</span>
+        </div>
+    </div>
+</body>
+</html>

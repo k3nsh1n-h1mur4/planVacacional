@@ -1,0 +1,39 @@
+{% extends 'layout.html' %}
+
+
+{% block body %}
+  <div class="container mt-5">
+    <div class="card">
+      <div class="card-body">
+        <form action="" method="POST">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div class="form-group">
+                <label for="name">Nombre Completo</label>
+              <input type="text" name="name" class="form-control">
+            </div>
+            
+            <div class="form-group">
+                <label for="fDate">Fecha de Nacimiento</label>
+              <input type="text" name="fDate" class="form-control">
+            </div>
+            
+            <div class="form-group">
+                <label for="tSangre">Tipo de Sangre</label>
+              <input type="text" name="tSangre" class="form-control">
+            </div>
+          
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary">
+                  Guardar
+              </button>     
+            </div>
+        </form>
+  
+        <button class="btn btn-secondary">
+            Registrar otro hijo
+        </button>
+      </div>
+    </div>
+      
+  </div>
+{% endblock body %}

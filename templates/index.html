@@ -1,0 +1,61 @@
+{% extends 'layout.html' %}
+
+
+{% block body %}
+
+  <div class="container mt-5">
+     <div class="row">
+       <div class="col-sm">
+         <div class="card">
+          <div class="card-body">
+            <h1>Registro Trabajador</h1>
+            <form action="/add_worker" method="POST">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" id="">
+              <div class="form-group">
+                <label for="name">Nombre Completo</label>
+                <input type="text" name="name" class="form-control">
+              </div>
+
+              <div class="form-group">
+                <label for="adscription">Adscripción</label>
+                <input type="text" name="adscription" class="form-control" id="">
+              </div>
+              
+              <div class="form-group">
+                <label for="category">Categoría</label>
+                <input type="text" name="category" class="form-control" id="">
+              </div>
+
+              <div class="form-group">
+                <label for="matricula">Matrícula</label>
+                <input type="text" name="matricula" class="form-control" id="">
+              </div>
+
+              <div class="form-group">
+                <label for="nAfil">Número Seguridad Social</label>
+                <input type="text" name="nAfil" class="form-control" id="">
+              </div>
+              
+              <div class="form-group">
+                <label for="cellphone">Núm. Celular</label>
+                <input type="text" name="cellphone" class="form-control" id="">
+              </div>
+              
+              <div class="form-group">
+                <label for="direction">Dirección</label>
+                <input type="text" name="direction" class="form-control" id="">
+              </div>
+              
+              <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary">
+              </div>
+              
+            </form>
+           </div>
+         </div>
+         
+       </div>
+     </div>
+  </div>
+  
+{% endblock body %}
