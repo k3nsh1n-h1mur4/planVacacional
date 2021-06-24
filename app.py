@@ -9,9 +9,9 @@ from flask_mysqldb import MySQL
 app = Flask(__name__, static_folder='static')
 app.secret_key = 'isaac'
 app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'k3nsh1n'
-app.config['MYSQL_PASSWORD'] = 'k0rn82...'
-app.config['MYSQL_DB'] = 'PLANVACACIONAL'
+app.config['MYSQL_USER'] = ''
+app.config['MYSQL_PASSWORD'] = ''
+app.config['MYSQL_DB'] = ''
 mysql = MySQL(app)
 csrf = CSRFProtect(app)
 qrcode = QRcode(app)
