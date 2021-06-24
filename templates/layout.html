@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" 
             integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <title>PLAN VACACIONAL</title>
@@ -13,9 +13,9 @@
     {% block navbar %}
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light bg-primary">
-            <a class="navbar-brand" href="/">Registrar Trabajador</a>
-            <a class="navbar-brand" href="/list">Listado General</a>
-            <a class="navbar-brand" href="/listC">Listado General de Hijos</a>
+            <a class="navbar-brand" href="/" style="color: white;">Registrar Trabajador</a>
+            <a class="navbar-brand" href="/list" style="color: white;">Listado General</a>
+            <a class="navbar-brand" href="/listC" style="color: white;">Listado General de Hijos</a>
             </nav>
         </div>      
     {% endblock navbar %}
@@ -23,5 +23,7 @@
     {% block body %}
 
     {% endblock %}
+
+    <script src="{{ url_for('static', filename='javascript/js.js') }}"> </script>
 </body> 
 </html>

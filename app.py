@@ -2,10 +2,11 @@ from flask  import Flask, request, render_template, redirect, url_for, make_resp
 from flask_qrcode import QRcode
 from flask_wtf.csrf import CSRFProtect
 import pdfkit
+from flask_login import LoginManager
 from flask_mysqldb import MySQL
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
 app.secret_key = 'isaac'
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'k3nsh1n'
@@ -54,6 +55,30 @@ def delete_worker(id):
     return redirect(url_for('list_worker'))
 
 
+@app.route('/edit/<string:id>', methods=['GET', 'POST'])
+def edit(id):
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT * FROM registerWorker WHERE id = {0}'.format(id))
+    data = cur.fetchall()
+    return render_template('edit.html', datas = data)
+
+
+@app.route('/update/<string:id>', methods=['POST'])
+def update(id):
+   if request.method == 'POST':
+       name = request.form['name']
+       adscription = request.form['adscription']
+       category = request.form['category']
+       matricula = request.form['matricula']
+       nAfil = request.form['nAfil']
+       cellphone = request.form['cellphone']
+       direction = request.form['direction']
+       cur = mysql.connection.cursor()
+       cur.execute('UPDATE registerWorker SET name=%s, adscription=%s, category=%s, matricula=%s, nAfil=%s, cellphone=%s, direction=%s WHERE id = %s', (name, adscription, category, matricula, nAfil, cellphone, direction, id))
+       mysql.connection.commit()
+       return redirect(url_for('list_worker'))
+
+
 @app.route('/registerCh/<id>', methods=['GET', 'POST'])
 def registerCh(id):
     if request.method == 'GET':
@@ -95,22 +120,24 @@ def QrCode(id):
         #print(rows[0])
         return render_template('qrcode.html', rows = rows)
 
-@app.route('/printPdf/<string:id>', methods=['GET', 'POST'])
+@app.route('/printPdf/<string:id>', methods=['GET'])
 def printPdf(id):
-    if request.method == 'GET':
-        cur = mysql.connection.cursor()
-        cur.execute('SELECT * FROM registerWorker inner join registerChildrens WHERE worker_id = {0}'.format(id))
-        rows = cur.fetchall()
-        mysql.connection.commit()
-        res = render_template('printPdf.html', rows = rows)
-        print(rows)
-        print(res)
+    
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT * FROM registerWorker inner join registerChildrens WHERE worker_id = {0}'.format(id))
+    rows = cur.fetchall()
+    mysql.connection.commit()
+    res = render_template('printPdf.html', rows = rows)
+    print(rows)
+    print(res)
 
-        responseString = pdfkit.from_string(res, False)
-        response = make_response(responseString)
-        response.headers['Content-Type'] = 'application/pdf'
-        response.headers['Content-Disposition'] = 'inline; filename=output.pdf'
-        return response
+
+    css = '/Users/k3nsh1n/flask-projects/planVacacional/static/css/main.css'
+    responseString = pdfkit.from_string(res, False)
+    response = make_response(responseString)
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] = 'inline; filename=output.pdf'
+    return response
 
 
 

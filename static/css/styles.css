@@ -1,4 +1,5 @@
-
-body {
-    color: #fffe;
+h1 {
+    text-align: center;
+    color: green;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }

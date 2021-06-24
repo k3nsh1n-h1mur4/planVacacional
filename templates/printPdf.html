@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Imprimir PDF</title>
@@ -11,7 +11,7 @@
         <div class="card">
             <div class="row">
                 <div class="col-3">
-                    <img src="" alt="sntss-logo">
+                    <img src="/Users/k3nsh1n/flask-projects/planVacacional/static/images/sntss-logo.png" height="110" width="110" alt="sntss-logo">
                 </div>
                 <div class="col-9">
                     <h1 style="text-align: center;">S.N.T.S.S. SECC III JALISCO</h1>
@@ -37,6 +37,9 @@
                         <span>Tipo de Sangre: {{ rows[0].12 }}</span>
                     </div>
                 </div>
+                <br>
+                <br>
+
                 <div class="container mt-5">
                     <div class="row">
                         <div class="col-6">
@@ -49,12 +52,17 @@
             </div>
         </div>
     </div>
+    <br>
+    <br>
     <div class="container mt-3" style="text-align: center;">
         <div class="row">
             <span>Firma de Recibido:_______________________________________</span>
         </div>
     </div>
-<span><strong>--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</strong></span>
+    <br>
+    <br>
+    <br>
+    <span><strong>--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</strong></span>
     <div class="container">
         <div class="card">
             <div class="row">
@@ -84,6 +92,8 @@
                         <span>Tipo de Sangre: {{ rows[0].12 }}</span>
                     </div>
                 </div>
+                <br>
+                <br>
                 <div class="col-6">
                     <img src="{{ qrcode(rows[0], box_size=3) }}" alt="img_qrcode">
                 </div>

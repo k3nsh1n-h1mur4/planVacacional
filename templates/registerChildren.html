@@ -4,12 +4,12 @@
 {% block body %}
   <div class="container mt-5">
     <div class="card">
-      <div class="card-body">
+      <div class="card-body" id="cardRH">
         <form action="" method="POST">
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
             <div class="form-group">
                 <label for="name">Nombre Completo</label>
-              <input type="text" name="name" class="form-control">
+              <input type="text" name="name" class="form-control" autofocus>
             </div>
             
             <div class="form-group">
@@ -29,9 +29,7 @@
             </div>
         </form>
   
-        <button class="btn btn-secondary">
-            Registrar otro hijo
-        </button>
+       
       </div>
     </div>
       
