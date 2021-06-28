@@ -4,22 +4,52 @@ from flask_wtf.csrf import CSRFProtect
 import pdfkit
 from flask_login import LoginManager
 from flask_mysqldb import MySQL
+#from wkhtmltopdf import wkhtmltopdf
+import flask_excel as excel
+from flask_login import UserMixin
+from werkzeug.security import check_password_hash, generate_password_hash
+#from flask_session import Session
+import random
+import csv
+from io import StringIO
 
-
-app = Flask(__name__, static_folder='static')
-app.secret_key = 'isaac'
+app = Flask(__name__, static_folder='static', template_folder='templates')
+app.secret_key = 'abimael'
 app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = ''
-app.config['MYSQL_PASSWORD'] = ''
-app.config['MYSQL_DB'] = ''
+app.config['MYSQL_USER'] = 'k3nsh1n'
+app.config['MYSQL_PASSWORD'] = 'k0rn82...'
+app.config['MYSQL_DB'] = 'PLANVACACIONAL'
 mysql = MySQL(app)
 csrf = CSRFProtect(app)
 qrcode = QRcode(app)
+#session = Session(app)
+
+
+
+class User(UserMixin):
+
+    def __init__(self, username, password, email):
+        self.username = username
+        self.password = password
+        self.email = email
+
+    def set_password(self, password):
+        self.password = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password, password)
+
+
+t = User('isaac', 'cervantes', 'isaac.acervantes@gmail.com')
+print(t.email)
+
 
 
 @app.route('/')
 def index():
+    #print(session)
     return render_template('index.html')
+
 
 @app.route('/add_worker', methods=['POST'])
 def add_worker():
@@ -36,7 +66,7 @@ def add_worker():
                         (name, adscription, category, matricula, nAfil, cellphone, direction))
         mysql.connection.commit()
         #   flash('Register was added successfully');
-        return redirect(url_for('index'))
+        return redirect(url_for('list'))
 
 
 @app.route('/list', methods=['GET'])
@@ -115,30 +145,86 @@ def deleteC(id):
 def QrCode(id):
     if request.method == 'GET':
         cur = mysql.connection.cursor()
-        cur.execute('SELECT * FROM registerWorker inner join registerChildrens WHERE worker_id = {0}'.format(id))
+        results = cur.execute('SELECT * FROM registerWorker inner join registerChildrens ON registerChildrens.worker_id = registerWorker.id and registerWorker.id = {0}'.format(id));
         rows = cur.fetchall()
-        #print(rows[0])
         return render_template('qrcode.html', rows = rows)
 
-@app.route('/printPdf/<string:id>', methods=['GET'])
+@app.route('/pdfs/printPDf/<string:id>', methods=['GET'])
 def printPdf(id):
     
     cur = mysql.connection.cursor()
-    cur.execute('SELECT * FROM registerWorker inner join registerChildrens WHERE worker_id = {0}'.format(id))
+    results = cur.execute('SELECT * FROM registerWorker inner join registerChildrens ON registerChildrens.worker_id = registerWorker.id and registerWorker.id = {0}'.format(id));
     rows = cur.fetchall()
     mysql.connection.commit()
-    res = render_template('printPdf.html', rows = rows)
-    print(rows)
-    print(res)
+    print(results)
+    print(len(rows))
+    options = {
+        'enable-local-file-access':None,
+    }
+    if(len(rows) == 1):
+        res = render_template('pdfs/printPdf.html', rows = rows)
+        #res = render_template('printPdf.html', rows = rows)
+        css = '/Users/k3nsh1n/flask-projects/planVacacional/static/css/main.css'
+        responseString = pdfkit.from_string(res, False, options=options)
+        response = make_response(responseString)
+        response.headers['Content-Type'] = 'application/pdf'
+        response.headers['Content-Disposition'] = 'inline; filename=output.pdf'
+        return response
+    elif (len(rows) == 2):
+        res = render_template('pdfs/printPdf.html', rows = rows)
+        #css = '/Users/k3nsh1n/flask-projects/planVacacional/static/css/main.css'
+        responseString = pdfkit.from_string(res, False, options=options)
+        response = make_response(responseString)
+        response.headers['Content-Type'] = 'application/pdf'
+        response.headers['Content-Disposition'] = 'inline; filename=output.pdf'
+        return response
+    elif (len(rows) == 3):
+        res = render_template('pdfs/printPdf.html', rows = rows)
+        #css = '/Users/k3nsh1n/flask-projects/planVacacional/static/css/main.css'
+        responseString = pdfkit.from_string(res, False, options=options)
+        response = make_response(responseString)
+        response.headers['Content-Type'] = 'application/pdf'
+        response.headers['Content-Disposition'] = 'inline; filename=output.pdf'
+        return response
+    elif (len(rows) == 4):
+        res = render_template('pdfs/printPdf.html', rows = rows)
+        #css = '/Users/k3nsh1n/flask-projects/planVacacional/static/css/main.css'
+        responseString = pdfkit.from_string(res, False, options=options)
+        response = make_response(responseString)
+        response.headers['Content-Type'] = 'application/pdf'
+        response.headers['Content-Disposition'] = 'inline; filename=output.pdf'
+        return response
 
 
-    css = '/Users/k3nsh1n/flask-projects/planVacacional/static/css/main.css'
-    responseString = pdfkit.from_string(res, False)
-    response = make_response(responseString)
-    response.headers['Content-Type'] = 'application/pdf'
-    response.headers['Content-Disposition'] = 'inline; filename=output.pdf'
+@app.route('/exportExcel', methods=['GET'])
+def exportExcel():
+    if request.method == 'GET':
+        si = StringIO()
+        cw = csv.writer(si)
+        cur = mysql.connection.cursor()
+        data = cur.execute('SELECT * FROM registerWorker')
+        rows = cur.fetchall()
+        cw.writerow([i[0] for i in rows])
+        cw.writerows(rows)
+        response = make_response(si.getvalue())
+        response.headers['Content-Type'] = 'text/csv'
+        response.headers['Content-Disposition'] = 'inline; filename=report.csv'
+        return response
+
+
+@app.route('/exportExcelHijos', methods=['GET'])
+def exportExcelHijos():
+    si = StringIO()
+    cw = csv.writer(si)
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT * FROM registerChildrens')
+    rows = cur.fetchall()
+    cw.writerow([i[0] for i in rows])
+    cw.writerows(rows)
+    response = make_response(si.getvalue())
+    response.headers['Content-Type'] = 'text/csv'
+    response.headers['Content-Disposition'] = 'inline; filename=reportHijos.csv'
     return response
-
 
 
 

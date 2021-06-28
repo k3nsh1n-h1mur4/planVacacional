@@ -4,6 +4,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" 
+                integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title>Imprimir PDF</title>
 </head>
 <body>
@@ -11,7 +14,7 @@
         <div class="card">
             <div class="row">
                 <div class="col-3">
-                    <img src="/Users/k3nsh1n/flask-projects/planVacacional/static/images/sntss-logo.png" height="110" width="110" alt="sntss-logo">
+                    <img src="/Users/k3nsh1n/flask-projects/planVacacional/static/images/sntss-logo.png" height="100" width="100" alt="sntss-logo">
                 </div>
                 <div class="col-9">
                     <h1 style="text-align: center;">S.N.T.S.S. SECC III JALISCO</h1>
@@ -20,39 +23,36 @@
                 </div>
             </div>
         </div>
-        <div class="card-title">
 
-        </div>
         <div class="container">
             <div class="row">
-                <div class="col-6">
-                    <div class="card-body">
+                <div class="col-sm">
                         <span>Nombre: {{ rows[0].1 }}</span><br>
                         <span>Adscripción: {{ rows[0].2 }}</span><br>
                         <span>Categoría: {{ rows[0].3 }}</span><br>
                         <span>Matrícula: {{ rows[0].4 }}</span><br>
                         <br>
-                        <span>Nombre: {{ rows[0].10 }}</span><br>
-                        <span>Fecha de Nacimiento: {{ rows[0].11 }}</span><br>
-                        <span>Tipo de Sangre: {{ rows[0].12 }}</span>
-                    </div>
+                        {% for row in rows %}
+                        <span>Nombre: {{ row.10 }}</span><br>
+                        <span>Fecha de Nacimiento: {{ row.11 }}</span><br>
+                        <span>Tipo de Sangre: {{ row.12 }}</span>
+                        <br>
+                        {% endfor %}
                 </div>
-                <br>
-                <br>
-
-                <div class="container mt-5">
+                <div class="col-sm align-self-center">
+                    <img src="{{ qrcode(rows, box_size=3) }}" alt="img_qrcode"> 
+                </div>
+                <!-- <div class="container mt-2">
                     <div class="row">
                         <div class="col-6">
-                            <img src="{{ qrcode(rows[0], box_size=3) }}" alt="img_qrcode">
+                            <img src="{{ qrcode(rows, box_size=3) }}" alt="img_qrcode">
                         </div>
-                    </div>
-                    
-                </div>
+                    </div>   
+                </div> -->
                 
             </div>
         </div>
     </div>
-    <br>
     <br>
     <div class="container mt-3" style="text-align: center;">
         <div class="row">
@@ -60,14 +60,12 @@
         </div>
     </div>
     <br>
-    <br>
-    <br>
     <span><strong>--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</strong></span>
     <div class="container">
         <div class="card">
             <div class="row">
                 <div class="col-3">
-                    <img src="" alt="">
+                    <img src="/Users/k3nsh1n/flask-projects/planVacacional/static/images/sntss-logo.png" height="100" width="100" alt="sntss-logo">
                 </div>
                 <div class="col-9">
                     <h1 style="text-align: center;">S.N.T.S.S. SECC III JALISCO</h1>
@@ -87,15 +85,18 @@
                         <span>Categoría: {{ rows[0].3 }}</span><br>
                         <span>Matrícula: {{ rows[0].4 }}</span><br>
                         <br>
-                        <span>Nombre: {{ rows[0].10 }}</span><br>
-                        <span>Fecha de Nacimiento: {{ rows[0].11 }}</span><br>
-                        <span>Tipo de Sangre: {{ rows[0].12 }}</span>
+                        {% for row in rows %}
+                        <span>Nombre: {{ row.10 }}</span><br>
+                        <span>Fecha de Nacimiento: {{ row.11 }}</span><br>
+                        <span>Tipo de Sangre: {{ row.12 }}</span>
+                        <br>
+                        {% endfor %}
                     </div>
                 </div>
                 <br>
                 <br>
                 <div class="col-6">
-                    <img src="{{ qrcode(rows[0], box_size=3) }}" alt="img_qrcode">
+                    <img src="{{ qrcode(rows, box_size=3) }}" alt="img_qrcode">
                 </div>
             </div>
         </div> 

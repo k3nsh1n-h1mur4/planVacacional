@@ -31,7 +31,7 @@
                         <a href="/delete/{{ data.0 }}" class="btn btn-danger">Eliminar</a>
                        
                         <a href="/registerCh/{{ data.0 }}" class="btn btn-secondary">Registrar Hijo</a>
-                        <a href="/printPdf/{{ data.0 }}" class="btn btn-primary">Imprimir PDF</a>
+                        <a href="{{ url_for('printPdf', id=data.0) }}" class="btn btn-primary">Imprimir PDF</a>
                     </td>
                 </tr>
             </tbody>
